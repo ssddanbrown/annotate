@@ -1,0 +1,26 @@
+{
+  "name": "annotate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:js:production": "esbuild ./src/main.js --sourcemap --target=es2019 --bundle --outfile=dist/app.js --minify",
+    "build:js:watch": "chokidar --initial \"./src/**/*.js\" -c \"npm run build:js:dev\"",
+    "build:js:dev": "esbuild ./src/main.js --bundle --sourcemap --target=es2019 --outfile=dist/app.js",
+    "build": "npm-run-all build:*:dev",
+    "production": "npm-run-all build:*:production",
+    "watch": "npm-run-all --parallel build:*:watch",
+    "livereload": "livereload ./",
+    "dev": "npm-run-all --parallel watch livereload",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chokidar-cli": "^2.1.0",
+    "esbuild": "^0.12.14",
+    "livereload": "^0.9.3",
+    "npm-run-all": "^4.1.5"
+  }
+}
