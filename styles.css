@@ -1,0 +1,17 @@
+
+
+#sample_image {
+    display: none;
+}
+
+.drawing-area {
+    position: relative;
+    background: #85bf85;
+    width: 1000px;
+    height: 800px;
+}
+.drawing-area canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
