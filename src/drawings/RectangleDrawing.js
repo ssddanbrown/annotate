@@ -136,12 +136,20 @@ export default class RectangleDrawing extends Drawing {
         }
     }
 
-
     moveDrawingUponMouseMove(eventX, eventY) {
         const xOffset = eventX - this.#lastMouseDown.eventX;
         const yOffset = eventY - this.#lastMouseDown.eventY;
         this.#rect.x = this.#lastMouseDown.startRect.x + xOffset;
         this.#rect.y = this.#lastMouseDown.startRect.y + yOffset;
+        this.needsRender = true;
+    }
+
+    /**
+     *
+     * @param {Function<{Rect}>} callback
+     */
+    modifyRect(callback) {
+        callback(this.#rect);
         this.needsRender = true;
     }
 

@@ -2,9 +2,12 @@ import globalState from "./state";
 import {createRect} from "./rects";
 
 import DrawingCanvas from "./canvases/DrawingCanvas";
+import RectangleTool from "./tools/RectangleTool";
+import ModifyTool from "./tools/ModifyTool";
+import RectangleDrawing from "./drawings/RectangleDrawing";
 
-const imageCanvasEl = document.getElementById('image-canvas');
-const drawingCanvasEl = document.getElementById('drawing-canvas');
+const imageCanvasEl = document.getElementById('canvas-image');
+const drawingCanvasEl = document.getElementById('canvas-drawing');
 
 const imageCtx = imageCanvasEl.getContext('2d');
 
@@ -20,8 +23,12 @@ sampleImage.onload = function() {
 }
 
 const drawingCanvas = new DrawingCanvas(drawingCanvasEl, globalState);
+globalState.actions.setDrawingCanvas(drawingCanvas);
 drawingCanvas.startRenderLoop();
 
-import RectangleDrawing from "./drawings/RectangleDrawing";
+const modifyTool = new ModifyTool(document.getElementById('tool-modify'), globalState);
+const rectangleTool = new RectangleTool(document.getElementById('tool-rectangle'), globalState);
+
+globalState.actions.makeToolActive(modifyTool);
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(100, 100, 100, 100), 5));
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(200, 200, 100, 100), 5));

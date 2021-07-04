@@ -1,4 +1,3 @@
-import globalState from "../state";
 
 export default class DrawingCanvas {
 
@@ -26,38 +25,38 @@ export default class DrawingCanvas {
         this.#el = el;
         this.#state = state;
         this.#ctx = el.getContext('2d');
-        this.setupEventHandling();
     }
 
     /**
-     * Setup all DOM event handling for the canvas.
-     */
-    setupEventHandling() {
-        this.passThroughEventToRenderables('mousedown', 'onMouseDown');
-        this.passThroughEventToRenderables('mouseup', 'onMouseUp');
-        this.passThroughEventToRenderables('mousemove', 'onMouseMove');
-    }
-
-    /**
-     * On the given DOM event, pass is through to renderables on the canvas
-     * via the given method name.
-     * Events will be passed if the renderable has opted-in to capture events,
-     * if the renderable is active or if the event location sits upon the renderable.
+     * Listen for a DOM event on the canvas
      * @param {String} domEvent
-     * @param {String} methodName
+     * @param {Function} listener
      */
-    passThroughEventToRenderables(domEvent, methodName) {
-        this.#el.addEventListener(domEvent, event => {
-            const drawingBounds = this.#el.getBoundingClientRect();
-            const x = event.clientX - drawingBounds.x;
-            const y = event.clientY - drawingBounds.y;
-            for (const renderable of this.#state.renderables) {
-                if (renderable.captureEvents || renderable.isActive() || renderable.isPointAtDrawing(x, y)) {
-                    const method = renderable[methodName].bind(renderable);
-                    method(x, y);
-                }
-            }
-        });
+    listenToCanvasEvent(domEvent, listener) {
+        this.#el.addEventListener(domEvent, listener);
+    }
+
+    /**
+     * Stop listening to a DOM event on the canvas
+     * @param {String} domEvent
+     * @param {Function} listener
+     */
+    stopListeningToCanvasEvent(domEvent, listener) {
+        this.#el.removeEventListener(domEvent, listener);
+    }
+
+    /**
+     * Offset the given client position coordinates to be relative to the canvas.
+     * @param {Number} x
+     * @param {Number} y
+     * @returns {{x: Number, y: Number}}
+     */
+    offsetClientPosition(x, y) {
+        const drawingBounds = this.#el.getBoundingClientRect();
+        return {
+            x: x - drawingBounds.x,
+            y: y - drawingBounds.y,
+        }
     }
 
     /**
