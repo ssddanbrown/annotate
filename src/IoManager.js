@@ -7,9 +7,52 @@ export default class IoManager {
 
     constructor(state) {
         this.#state = state;
+        this.setupFileDropHandling();
     }
 
+    setupFileDropHandling() {
+        const body = window.document.body;
 
+        body.addEventListener('dragenter', event => {
+            event.preventDefault();
+        });
+        body.addEventListener('dragover', event => {
+            event.preventDefault();
+        });
+
+        body.addEventListener('drop', event => {
+            event.preventDefault();
+            for (const item of event.dataTransfer.items) {
+                if (item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    this.loadFileAsImage(file);
+                }
+            }
+        });
+    }
+
+    /**
+     * Load a File object as the image for the current scene.
+     * @param {File} file
+     */
+    loadFileAsImage(file) {
+        const reader = new FileReader();
+        const image = new Image();
+        reader.readAsDataURL(file);
+        reader.onload =  (event) => {
+            if (event.target.readyState === FileReader.DONE) {
+                image.src = event.target.result;
+                image.onload = () => {
+                    this.loadImage(image);
+                }
+            }
+        }
+    }
+
+    /**
+     * Load a new image into the scene to be drawn upon.
+     * @param {Image} image
+     */
     loadImage(image) {
         const aspectRatio = image.height / image.width;
         const width = Math.min(800, image.width);
