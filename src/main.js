@@ -24,7 +24,6 @@ function renderFrame() {
     drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
     for (const renderable of renderables) {
         // if (renderable.needsRender) {
-
             renderable.render(drawingCtx);
         // }
     }
@@ -32,9 +31,11 @@ function renderFrame() {
     requestAnimationFrame(renderFrame);
 }
 
+import globalState from "./state";
+
 import RectangleDrawing from "./drawings/RectangleDrawing";
-renderables.push(new RectangleDrawing(100, 100, 100, 100, 5));
-renderables.push(new RectangleDrawing(200, 200, 100, 100, 5));
+renderables.push(new RectangleDrawing(globalState, 100, 100, 100, 100, 5));
+renderables.push(new RectangleDrawing(globalState, 200, 200, 100, 100, 5));
 requestAnimationFrame(renderFrame);
 
 function passThroughEventToRenderables(domEvent, methodName) {
@@ -43,7 +44,7 @@ function passThroughEventToRenderables(domEvent, methodName) {
         const x = event.clientX - drawingBounds.x;
         const y = event.clientY - drawingBounds.y;
         for (const renderable of renderables) {
-            if (renderable.captureEvents || renderable.isPointAtDrawing(x, y)) {
+            if (renderable.captureEvents || renderable.isActive() || renderable.isPointAtDrawing(x, y)) {
                 const method = renderable[methodName].bind(renderable);
                 method(x, y);
             }
