@@ -21,6 +21,11 @@ export default class DrawingCanvas {
      */
     #ctx;
 
+    /**
+     * @type {[{domEvent: String, listener: Function<Event>}]}
+     */
+    #activeCanvasListeners = [];
+
     constructor(el, state) {
         this.#el = el;
         this.#state = state;
@@ -30,19 +35,36 @@ export default class DrawingCanvas {
     /**
      * Listen for a DOM event on the canvas
      * @param {String} domEvent
-     * @param {Function} listener
+     * @param {Function<CanvasEvent>} listener
      */
     listenToCanvasEvent(domEvent, listener) {
-        this.#el.addEventListener(domEvent, listener);
+        const wrappedListener = this.wrapListenerForCustomEvents(listener);
+        this.#el.addEventListener(domEvent, wrappedListener);
+        this.#activeCanvasListeners.push({domEvent, listener: wrappedListener});
     }
 
     /**
-     * Stop listening to a DOM event on the canvas
-     * @param {String} domEvent
-     * @param {Function} listener
+     * Wrap a normal event listener so that the event returned is a custom
+     * Canvas event which contains some calculated canvas specific details.
+     * @param {Function<CanvasEvent>} listener
+     * @returns {Function<Event>}
      */
-    stopListeningToCanvasEvent(domEvent, listener) {
-        this.#el.removeEventListener(domEvent, listener);
+    wrapListenerForCustomEvents(listener) {
+        return (event) => {
+            const {x, y} = this.offsetClientPosition(event.clientX || 0, event.clientY || 0);
+            const canvasEvent = {originalEvent: event, x, y};
+            listener(canvasEvent);
+        }
+    }
+
+    /**
+     * Remove all added event listeners.
+     */
+    removeAddedCanvasEventListeners() {
+        for (const {domEvent, listener} of  this.#activeCanvasListeners) {
+            this.#el.removeEventListener(domEvent, listener);
+        }
+        this.#activeCanvasListeners.splice(0, this.#activeCanvasListeners.length);
     }
 
     /**
@@ -91,3 +113,10 @@ export default class DrawingCanvas {
         }
     }
 }
+
+/**
+ * @typedef CanvasEvent
+ * @property {Number} x - Canvas relative x position of the event
+ * @property {Number} y - Canvas relative y position of the event
+ * @property {Event} originalEvent - The original native event
+ */

@@ -16,27 +16,27 @@ export default class RectangleTool extends Tool {
     #activeRectangle = null;
 
     setupCanvasEventHandling(drawingCanvas) {
-        const listeners = [
-            {domEvent: 'mousedown', listener: this.onMouseDown.bind(this)},
-            {domEvent: 'mouseup', listener: this.onMouseUp.bind(this)},
-            {domEvent: 'mousemove', listener: this.onMouseMove.bind(this)},
-        ];
-        for (const listener of listeners) {
-            this.activeListeners.push(listener);
-            drawingCanvas.listenToCanvasEvent(listener.domEvent, listener.listener);
-        }
+        drawingCanvas.listenToCanvasEvent('mousedown', this.onMouseDown.bind(this));
+        drawingCanvas.listenToCanvasEvent('mouseup', this.onMouseUp.bind(this));
+        drawingCanvas.listenToCanvasEvent('mousemove', this.onMouseMove.bind(this));
     }
 
+    /**
+     * @param {CanvasEvent} event
+     */
     onMouseDown(event) {
-        this.#lastMouseDownPosition = this.state.drawingCanvas.offsetClientPosition(event.clientX, event.clientY);
+        this.#lastMouseDownPosition = {x: event.x, y: event.y};
     }
 
+    /**
+     * @param {CanvasEvent} event
+     */
     onMouseMove(event) {
         if (!this.#lastMouseDownPosition) {
             return;
         }
 
-        const {x, y} = this.state.drawingCanvas.offsetClientPosition(event.clientX, event.clientY);
+        const {x, y} = event;
 
         // Updated rectangle size
         if (this.#activeRectangle) {
@@ -48,7 +48,6 @@ export default class RectangleTool extends Tool {
 
         // Check if we need to create a new rectangle
         if (!this.#activeRectangle) {
-            console.log('here');
             const createDistance = 10;
             const width = x - this.#lastMouseDownPosition.x;
             const height = y - this.#lastMouseDownPosition.y;
@@ -63,7 +62,10 @@ export default class RectangleTool extends Tool {
         }
     }
 
-    onMouseUp() {
+    /**
+     * @param {CanvasEvent} event
+     */
+    onMouseUp(event) {
         this.#activeRectangle = null;
         this.#lastMouseDownPosition = null;
     }

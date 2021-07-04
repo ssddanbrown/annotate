@@ -18,8 +18,12 @@ function loadImageIntoCanvas(imageEl) {
 }
 
 const sampleImage = document.getElementById('sample_image');
-sampleImage.onload = function() {
+if (sampleImage.complete) {
     loadImageIntoCanvas(sampleImage);
+} else {
+    sampleImage.onload = function() {
+        loadImageIntoCanvas(sampleImage);
+    }
 }
 
 const drawingCanvas = new DrawingCanvas(drawingCanvasEl, globalState);

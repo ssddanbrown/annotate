@@ -12,11 +12,6 @@ export default class Tool {
      */
     state;
 
-    /**
-     * @type {[{domEvent: String, listener: Function}]}
-     */
-    activeListeners = [];
-
     constructor(buttonEl, state) {
         this.#buttonEl = buttonEl;
         this.state = state;
@@ -38,18 +33,6 @@ export default class Tool {
     }
 
     /**
-     * Tear down canvas-level handling performed by this tool.
-     * Generally ran upon the tool being de-activated.
-     * By default will remove all those defined in the activeListeners array.
-     * @param {DrawingCanvas} drawingCanvas
-     */
-    tearDownCanvasEventHandling(drawingCanvas) {
-        for (const {domEvent, listener} of this.activeListeners) {
-            drawingCanvas.stopListeningToCanvasEvent(domEvent, listener);
-        }
-    }
-
-    /**
      * Make this tool the active tool.
      * Should only be accessed be used by state to properly handle in the context of other tools.
      */
@@ -64,6 +47,5 @@ export default class Tool {
      */
     deactivate() {
         this.#buttonEl.classList.remove('active');
-        this.tearDownCanvasEventHandling(this.state.drawingCanvas);
     }
 }

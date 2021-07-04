@@ -20,7 +20,7 @@ export default class ModifyTool extends Tool {
      */
     passThroughEventToRenderables(drawingCanvas, domEvent, methodName) {
         const listener = event => {
-            const {x, y} = drawingCanvas.offsetClientPosition(event.clientX, event.clientY);
+            const {x, y} = event;
             for (const renderable of this.state.renderables) {
                 if (renderable.captureEvents || renderable.isActive() || renderable.isPointAtDrawing(x, y)) {
                     const method = renderable[methodName].bind(renderable);
@@ -29,7 +29,6 @@ export default class ModifyTool extends Tool {
             }
         };
         drawingCanvas.listenToCanvasEvent(domEvent, listener);
-        this.activeListeners.push({domEvent, listener});
     }
 
 }

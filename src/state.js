@@ -20,6 +20,7 @@ const globalState = {
         makeToolActive(tool) {
             if (globalState.activeTool) {
                 globalState.activeTool.deactivate();
+                globalState.drawingCanvas.removeAddedCanvasEventListeners();
             }
             globalState.activeTool = tool;
             tool.activate()
