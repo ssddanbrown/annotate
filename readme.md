@@ -1,3 +1,8 @@
+# Annotate
+
+In development, A simple web page to quickly and simply annotate screenshots.
+Deployed at https://danb.me/annotate/.
+
 ## Plan
 
 Two canvases:
