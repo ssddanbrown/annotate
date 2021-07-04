@@ -1,15 +1,6 @@
+import Canvas from "./Canvas";
 
-export default class DrawingCanvas {
-
-    /**
-     * @type {HTMLCanvasElement}
-     */
-    #el;
-
-    /**
-     * @type {GlobalState}
-     */
-    #state;
+export default class DrawingCanvas extends  Canvas {
 
     /**
      * @type {boolean}
@@ -17,20 +8,9 @@ export default class DrawingCanvas {
     #rendering = false;
 
     /**
-     * @type {CanvasRenderingContext2D}
-     */
-    #ctx;
-
-    /**
      * @type {[{domEvent: String, listener: Function<Event>}]}
      */
     #activeCanvasListeners = [];
-
-    constructor(el, state) {
-        this.#el = el;
-        this.#state = state;
-        this.#ctx = el.getContext('2d');
-    }
 
     /**
      * Listen for a DOM event on the canvas
@@ -39,7 +19,7 @@ export default class DrawingCanvas {
      */
     listenToCanvasEvent(domEvent, listener) {
         const wrappedListener = this.wrapListenerForCustomEvents(listener);
-        this.#el.addEventListener(domEvent, wrappedListener);
+        this.el.addEventListener(domEvent, wrappedListener);
         this.#activeCanvasListeners.push({domEvent, listener: wrappedListener});
     }
 
@@ -62,7 +42,7 @@ export default class DrawingCanvas {
      */
     removeAddedCanvasEventListeners() {
         for (const {domEvent, listener} of  this.#activeCanvasListeners) {
-            this.#el.removeEventListener(domEvent, listener);
+            this.el.removeEventListener(domEvent, listener);
         }
         this.#activeCanvasListeners.splice(0, this.#activeCanvasListeners.length);
     }
@@ -74,7 +54,7 @@ export default class DrawingCanvas {
      * @returns {{x: Number, y: Number}}
      */
     offsetClientPosition(x, y) {
-        const drawingBounds = this.#el.getBoundingClientRect();
+        const drawingBounds = this.el.getBoundingClientRect();
         return {
             x: x - drawingBounds.x,
             y: y - drawingBounds.y,
@@ -101,10 +81,10 @@ export default class DrawingCanvas {
      * up the next frame once complete.
      */
     renderFrame() {
-        this.#ctx.clearRect(0, 0, this.#el.width, this.#el.height);
-        for (const renderable of this.#state.renderables) {
+        this.ctx.clearRect(0, 0, this.el.width, this.el.height);
+        for (const renderable of this.state.renderables) {
             // if (renderable.needsRender) {
-            renderable.render(this.#ctx);
+            renderable.render(this.ctx);
             // }
         }
 
@@ -113,10 +93,3 @@ export default class DrawingCanvas {
         }
     }
 }
-
-/**
- * @typedef CanvasEvent
- * @property {Number} x - Canvas relative x position of the event
- * @property {Number} y - Canvas relative y position of the event
- * @property {Event} originalEvent - The original native event
- */

@@ -8,6 +8,7 @@ import RectangleDrawing from "./drawings/RectangleDrawing";
 import OvalDrawing from "./drawings/OvalDrawing";
 import OvalTool from "./tools/OvalTool";
 import ImageCanvas from "./canvases/ImageCanvas";
+import IoManager from "./IoManager";
 
 // Create our canvases and ready them into globalState
 const imageCanvasEl = document.getElementById('canvas-image');
@@ -19,6 +20,17 @@ globalState.actions.setImageCanvas(imageCanvas);
 
 // Start rendering on our drawing canvas
 drawingCanvas.startRenderLoop();
+
+// Start up our IO Manager
+const ioManager = new IoManager(globalState);
+
+// Handle action buttons
+document.getElementById('action-download').addEventListener('click', event => {
+    ioManager.downloadImage();
+});
+document.getElementById('action-copy').addEventListener('click', event => {
+    ioManager.copyToClipboard();
+});
 
 // Create our available tools and make one active
 const modifyTool = new ModifyTool(document.getElementById('tool-modify'), globalState);
