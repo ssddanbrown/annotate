@@ -10,7 +10,11 @@ const globalState = {
     activeTool: null,
     renderables: [],
     drawingCanvas: null,
+    imageCanvas: null,
     actions: {
+        setImageCanvas(canvas) {
+            globalState.imageCanvas = canvas;
+        },
         setDrawingCanvas(canvas) {
             globalState.drawingCanvas = canvas;
         },
@@ -45,4 +49,5 @@ export default globalState;
  * @property {Object} actions
  * @property {Array<Drawing>} renderables
  * @property {DrawingCanvas|null} drawingCanvas
+ * @property {ImageCanvas|null} imageCanvas
  */
