@@ -1,5 +1,3 @@
-
-
 export default class IoManager {
 
     /**
@@ -9,6 +7,19 @@ export default class IoManager {
 
     constructor(state) {
         this.#state = state;
+    }
+
+
+    loadImage(image) {
+        const aspectRatio = image.height / image.width;
+        const width = Math.min(800, image.width);
+        const height = width * aspectRatio;
+        this.#state.imageCanvas.setSize(width, height);
+        this.#state.drawingCanvas.setSize(width, height);
+        this.#state.imageCanvas.loadImage(image);
+        const container = this.#state.imageCanvas.getCanvasElement().parentElement;
+        container.style.width = `${width}px`;
+        container.style.height = `${height}px`;
     }
 
     /**
@@ -47,13 +58,13 @@ export default class IoManager {
         }
 
         const mergedCanvas = this.createMergedCanvas();
-        mergedCanvas.toBlob(function(blob) {
-             const data = [new ClipboardItem({[blob.type]: blob})];
-             navigator.clipboard.write(data).then(
-                 () => {
-                     window.alert('Image copied to clipboard!');
-                 }
-             );
+        mergedCanvas.toBlob(function (blob) {
+            const data = [new ClipboardItem({[blob.type]: blob})];
+            navigator.clipboard.write(data).then(
+                () => {
+                    window.alert('Image copied to clipboard!');
+                }
+            );
         });
     }
 }

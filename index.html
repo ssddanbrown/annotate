@@ -11,7 +11,6 @@
 <body>
 
     <header>
-        <h1>Annotate</h1>
         <div class="button-bar">
             <button id="tool-modify">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -48,13 +47,13 @@
             </button>
         </div>
     </header>
-    <img id="sample_image" width="700" src="./sample_image.jpg" alt="">
+    <img id="sample_image" src="./sample_image.jpg" alt="">
 
     <p></p>
 
     <div class="drawing-area">
-        <canvas id="canvas-image" width="1000" height="800"></canvas>
-        <canvas id="canvas-drawing" width="1000" height="800"></canvas>
+        <canvas id="canvas-image"></canvas>
+        <canvas id="canvas-drawing"></canvas>
     </div>
 
     <script src="./dist/app.js"></script>

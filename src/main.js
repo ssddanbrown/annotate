@@ -46,9 +46,9 @@ globalState.actions.addDrawing(new OvalDrawing(globalState, createRect(200, 500,
 // Load sample image for testing
 const sampleImage = document.getElementById('sample_image');
 if (sampleImage.complete) {
-    imageCanvas.loadImage(sampleImage);
+    ioManager.loadImage(sampleImage);
 } else {
     sampleImage.onload = function() {
-        imageCanvas.loadImage(sampleImage);
+        ioManager.loadImage(sampleImage);
     }
 }

@@ -37,5 +37,15 @@ export default class Canvas {
     getCanvasElement() {
         return this.el;
     }
+
+    /**
+     * Set the size of this canvas.
+     * @param {Number} width
+     * @param {Number} height
+     */
+    setSize(width, height) {
+        this.el.width = width;
+        this.el.height = height;
+    }
 }
 

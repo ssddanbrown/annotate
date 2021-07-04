@@ -38,3 +38,4 @@ Loads of good info here: https://developer.ibm.com/technologies/web-development/
 ## Attribution
 
 - Icons => [Heroicons by Steve Schoger](https://heroicons.com/)
+- CSS Reset => [Css Reset by Eric Meyer](https://meyerweb.com/eric/tools/css/reset/)
