@@ -45,6 +45,7 @@ export default class Drawing {
      * @param {CanvasRenderingContext2D} ctx
      * @param {Number} x
      * @param {Number} y
+     * @param {Number} size
      */
     renderHandle(ctx, x, y, size = 10) {
         ctx.beginPath();

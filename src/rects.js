@@ -61,6 +61,20 @@ export function pointOnRectEdge(rect, x, y, tolerance = 1) {
 
 
 /**
+ * Get the center points of each of the edges of the given rect.
+ * @param {Rect} rect
+ * @returns {[{x: *, y}, {x: *, y: *}, {x, y: *}, {x: *, y: *}]}
+ */
+export function getEdgeMidPoints(rect) {
+    return [
+        {x: rect.x + rect.width / 2, y: rect.y},
+        {x: rect.x + rect.width / 2, y: rect.y + rect.height},
+        {x: rect.x, y: rect.y + rect.height / 2},
+        {x: rect.x + rect.width, y: rect.y + rect.height / 2},
+    ];
+}
+
+/**
  * @typedef Rect
  * @property {Number} x
  * @property {Number} y
