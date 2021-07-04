@@ -22,13 +22,27 @@ export default class IoManager {
 
         body.addEventListener('drop', event => {
             event.preventDefault();
-            for (const item of event.dataTransfer.items) {
-                if (item.type.startsWith('image/')) {
-                    const file = item.getAsFile();
-                    this.loadFileAsImage(file);
-                }
-            }
+            this.loadImageFromDataTransferItemList(event.dataTransfer.items);
         });
+
+        body.addEventListener('paste', event => {
+            this.loadImageFromDataTransferItemList(event.clipboardData.items);
+        })
+    }
+
+    /**
+     * Load image, if existing, in the given data transfer item list.
+     * Searches through for the first relevant image file.
+     * @param {DataTransferItemList} list
+     */
+    loadImageFromDataTransferItemList(list) {
+        for (const item of list) {
+            if (item.type.startsWith('image/')) {
+                const file = item.getAsFile();
+                this.loadFileAsImage(file);
+                return;
+            }
+        }
     }
 
     /**
