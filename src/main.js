@@ -1,3 +1,4 @@
+import {createRect} from "./rects";
 
 const imageCanvas = document.getElementById('image-canvas');
 const drawingCanvas = document.getElementById('drawing-canvas');
@@ -34,8 +35,8 @@ function renderFrame() {
 import globalState from "./state";
 
 import RectangleDrawing from "./drawings/RectangleDrawing";
-renderables.push(new RectangleDrawing(globalState, 100, 100, 100, 100, 5));
-renderables.push(new RectangleDrawing(globalState, 200, 200, 100, 100, 5));
+renderables.push(new RectangleDrawing(globalState, createRect(100, 100, 100, 100), 5));
+renderables.push(new RectangleDrawing(globalState, createRect(200, 200, 100, 100), 5));
 requestAnimationFrame(renderFrame);
 
 function passThroughEventToRenderables(domEvent, methodName) {

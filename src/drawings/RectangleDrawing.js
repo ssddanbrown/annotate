@@ -1,22 +1,31 @@
 import Drawing from "./Drawing";
+import {checkRectEdgesAtPoint, pointOnRectEdge} from "../rects";
 
 export default class RectangleDrawing extends Drawing {
 
-    #width = 100;
-    #height = 100;
-    #x = 10;
-    #y = 10;
+    /**
+     * @type {Rect}
+     */
+    #rect;
+
+    /**
+     * @type {number}
+     */
     #lineWidth = 5;
+
+    /**
+     * @type {string}
+     */
     #color = '#FF0000';
 
+    /**
+     * @type {null|{eventX: Number, eventY: Number, startRect: Rect}}
+     */
     #lastMouseDown = null;
 
-    constructor(state, x, y, width, height, lineWidth = 5) {
+    constructor(state, rect, lineWidth = 5) {
         super(state);
-        this.#width = width;
-        this.#height = height;
-        this.#x = x;
-        this.#y = y;
+        this.#rect = rect;
         this.#lineWidth = lineWidth;
     }
 
@@ -34,14 +43,14 @@ export default class RectangleDrawing extends Drawing {
         // Border
         ctx.strokeStyle = this.isActive() ? '#00FF00' : this.#color;
         ctx.lineWidth = this.#lineWidth;
-        ctx.strokeRect(this.#x, this.#y, this.#width, this.#height);
+        ctx.strokeRect(this.#rect.x, this.#rect.y, this.#rect.width, this.#rect.height);
 
         if (this.isActive()) {
             const handleSize = this.#lineWidth * 1.2;
-            this.renderHandle(ctx, this.#x + this.#width / 2, this.#y, handleSize);
-            this.renderHandle(ctx, this.#x + this.#width / 2, this.#y + this.#height, handleSize);
-            this.renderHandle(ctx, this.#x, this.#y + this.#height / 2, handleSize);
-            this.renderHandle(ctx, this.#x + this.#width, this.#y + this.#height / 2, handleSize);
+            this.renderHandle(ctx, this.#rect.x + this.#rect.width / 2, this.#rect.y, handleSize);
+            this.renderHandle(ctx, this.#rect.x + this.#rect.width / 2, this.#rect.y + this.#rect.height, handleSize);
+            this.renderHandle(ctx, this.#rect.x, this.#rect.y + this.#rect.height / 2, handleSize);
+            this.renderHandle(ctx, this.#rect.x + this.#rect.width, this.#rect.y + this.#rect.height / 2, handleSize);
         }
 
         this.needsRender = false;
@@ -55,21 +64,7 @@ export default class RectangleDrawing extends Drawing {
      * @returns {boolean}
      */
     isPointAtDrawing(x, y) {
-        const withinSquare = (
-            x > this.#x - this.#lineWidth &&
-            x < this.#x + this.#width + this.#lineWidth &&
-            y > this.#y - this.#lineWidth &&
-            y < this.#y + this.#height + this.#lineWidth
-        );
-
-        const withinInner = (
-            x > this.#x + this.#lineWidth &&
-            x < this.#x + this.#width - this.#lineWidth &&
-            y > this.#y + this.#lineWidth &&
-            y < this.#y + this.#height - this.#lineWidth
-        );
-
-        return withinSquare && !withinInner;
+        return pointOnRectEdge(this.#rect, x, y, this.#lineWidth * 1.2);
     }
 
     /**
@@ -87,7 +82,7 @@ export default class RectangleDrawing extends Drawing {
             return this.resetState();
         }
 
-        this.#lastMouseDown = {eventX: x, eventY: y, x: this.#x, y: this.#y, width: this.#width, height: this.#height};
+        this.#lastMouseDown = {eventX: x, eventY: y, startRect: Object.assign({}, this.#rect)};
         this.captureEvents = true;
     }
 
@@ -114,11 +109,30 @@ export default class RectangleDrawing extends Drawing {
         const xOffset = eventX - this.#lastMouseDown.eventX;
         const yOffset = eventY - this.#lastMouseDown.eventY;
 
+        const edgesAtPoint = checkRectEdgesAtPoint(
+            this.#lastMouseDown.startRect,
+            this.#lastMouseDown.eventX,
+            this.#lastMouseDown.eventY,
+            this.#lineWidth * 1.2
+        );
 
-        // TODO - Below needs to calculate relative to the original mouse down location
-        const edgesAtPoint = this.calculateEdgesAtPoint(eventX, eventY);
         if (edgesAtPoint.top) {
-
+            this.#rect.y = this.#lastMouseDown.startRect.y + yOffset;
+            this.#rect.height = this.#lastMouseDown.startRect.height - yOffset;
+            this.needsRender = true;
+        }
+        if (edgesAtPoint.right) {
+            this.#rect.width = this.#lastMouseDown.startRect.width + xOffset;
+            this.needsRender = true;
+        }
+        if (edgesAtPoint.bottom) {
+            this.#rect.height = this.#lastMouseDown.startRect.height + yOffset;
+            this.needsRender = true;
+        }
+        if (edgesAtPoint.left) {
+            this.#rect.x = this.#lastMouseDown.startRect.x + xOffset;
+            this.#rect.width = this.#lastMouseDown.startRect.width - xOffset;
+            this.needsRender = true;
         }
     }
 
@@ -126,26 +140,9 @@ export default class RectangleDrawing extends Drawing {
     moveDrawingUponMouseMove(eventX, eventY) {
         const xOffset = eventX - this.#lastMouseDown.eventX;
         const yOffset = eventY - this.#lastMouseDown.eventY;
-        this.#x = this.#lastMouseDown.x + xOffset;
-        this.#y = this.#lastMouseDown.y + yOffset;
+        this.#rect.x = this.#lastMouseDown.startRect.x + xOffset;
+        this.#rect.y = this.#lastMouseDown.startRect.y + yOffset;
         this.needsRender = true;
-    }
-
-    /**
-     * Calculate the edges of the drawing that may be at the given point.
-     * @param {Number} x
-     * @param {Number} y
-     * @returns {{top: Boolean, left: Boolean, bottom: Boolean, right: Boolean}}
-     */
-    calculateEdgesAtPoint(x, y) {
-        const withinXBounds = x > (this.#x - this.#lineWidth) && x < (this.#x + this.#width + this.#lineWidth);
-        const withinYBounds = y > (this.#y - this.#lineWidth) && y < (this.#y + this.#height + this.#lineWidth)
-        return {
-            top: withinXBounds && y > (this.#y - this.#lineWidth) && y < this.#y + this.#lineWidth,
-            left: withinYBounds && x > (this.#x - this.#lineWidth) && x < this.#x + this.#lineWidth,
-            bottom: withinXBounds && y > (this.#y + this.#height - this.#lineWidth) && y < this.#y + this.#height + this.#lineWidth,
-            right: withinYBounds && x > (this.#x + this.#height - this.#lineWidth) && x < this.#x + this.#height + this.#lineWidth,
-        }
     }
 
 }
