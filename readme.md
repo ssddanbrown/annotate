@@ -29,3 +29,7 @@ Two canvases:
 ## Info
 
 Loads of good info here: https://developer.ibm.com/technologies/web-development/tutorials/wa-canvashtml5layering/
+
+## Attribution
+
+- Icons => [Heroicons by Steve Schoger](https://heroicons.com/)

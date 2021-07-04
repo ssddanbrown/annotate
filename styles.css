@@ -1,7 +1,60 @@
+* {
+    box-sizing: border-box;
+}
 
+body {
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 1.6rem;
+    margin: 0;
+}
 
 #sample_image {
     display: none;
+}
+
+header {
+    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 1rem auto 2rem;
+    border-radius: 12px;
+    z-index: 1;
+    position: relative;
+    padding: 1rem;
+}
+
+.button-bar button {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: .5rem 1rem;
+    border-radius: 12px;
+    border: 0;
+    margin: 0 .25rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.button-bar button svg {
+    width: 18px;
+    margin-right: .25rem;
+    transition: transform ease-in-out 120ms;
+}
+
+.button-bar button:hover svg {
+    transform: translateY(-2px);
+}
+
+.button-bar button.active {
+    background-color: #bce1c9;
 }
 
 .drawing-area {
@@ -9,13 +62,11 @@
     background: #85bf85;
     width: 1000px;
     height: 800px;
+    margin: 0 auto;
 }
 .drawing-area canvas {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-.tool-button.active {
-    border: 1px solid blue;
+    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
 }
