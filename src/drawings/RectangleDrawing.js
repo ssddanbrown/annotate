@@ -31,6 +31,10 @@ export default class RectangleDrawing extends RectangleBasedShapeDrawing {
             }
         }
 
+        ctx.shadowColor = null;
+        ctx.shadowOffsetX = null;
+        ctx.shadowOffsetY = null;
+        ctx.shadowBlur = null;
         this.needsRender = false;
     }
 }

@@ -1,12 +1,19 @@
 import globalState from "./state";
 import {createRect} from "./rects";
 
-import DrawingCanvas from "./canvases/DrawingCanvas";
+// Tools
 import RectangleTool from "./tools/RectangleTool";
 import ModifyTool from "./tools/ModifyTool";
+import OvalTool from "./tools/OvalTool";
+import NumberedStepTool from "./tools/NumberedStepTool";
+
+// Drawings
 import RectangleDrawing from "./drawings/RectangleDrawing";
 import OvalDrawing from "./drawings/OvalDrawing";
-import OvalTool from "./tools/OvalTool";
+import NumberedStepDrawing from "./drawings/NumberedStepDrawing";
+
+// Canvases & Services
+import DrawingCanvas from "./canvases/DrawingCanvas";
 import ImageCanvas from "./canvases/ImageCanvas";
 import IoManager from "./IoManager";
 
@@ -36,12 +43,14 @@ document.getElementById('action-copy').addEventListener('click', event => {
 const modifyTool = new ModifyTool(document.getElementById('tool-modify'), globalState);
 const rectangleTool = new RectangleTool(document.getElementById('tool-rectangle'), globalState);
 const ovalTool = new OvalTool(document.getElementById('tool-oval'), globalState);
+const numberedStepTool = new NumberedStepTool(document.getElementById('tool-numbered-step'), globalState);
 globalState.actions.makeToolActive(modifyTool);
 
 // Add some drawings to the canvas for testing
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(100, 100, 100, 100), 5));
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(200, 200, 100, 100), 5));
-globalState.actions.addDrawing(new OvalDrawing(globalState, createRect(200, 500, 200, 100), 5));
+globalState.actions.addDrawing(new NumberedStepDrawing(globalState, createRect(320, 250, 50, 50), '1'));
+globalState.actions.addDrawing(new OvalDrawing(globalState, createRect(200, 450, 200, 100), 5));
 
 // Load sample image for testing
 const sampleImage = document.getElementById('sample_image');

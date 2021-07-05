@@ -73,6 +73,12 @@ export default class RectangleBasedShapeDrawing extends Drawing {
         }
     }
 
+    /**
+     * Resize the drawing upon a mouse move event where
+     * the mouse is at the given event coordinates.
+     * @param {Number} eventX
+     * @param {Number} eventY
+     */
     resizeDrawingUponMouseMove(eventX, eventY) {
         const xOffset = eventX - this.lastMouseDown.eventX;
         const yOffset = eventY - this.lastMouseDown.eventY;
