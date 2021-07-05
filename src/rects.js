@@ -13,6 +13,21 @@ export function createRect(x = 0, y = 0, width = 100, height = 100) {
 }
 
 /**
+ * Adjust the given rect positions to remove negative widths or heights
+ * so that the shape is always drawn "front-facing"
+ * @param {Rect} rect
+ * @returns {Rect}
+ */
+export function absoluteRect(rect) {
+    return {
+        width: Math.abs(rect.width),
+        height: Math.abs(rect.height),
+        x: rect.x + (rect.width < 0 ? rect.width : 0),
+        y: rect.y + (rect.height < 0 ? rect.height : 0),
+    }
+}
+
+/**
  * Check which edges of the given rect fall on the given x,y point.
  * The tolerance given is effectively the edge "width".
  * @param {Rect} rect

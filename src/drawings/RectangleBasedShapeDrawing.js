@@ -1,4 +1,4 @@
-import {checkRectEdgesAtPoint, pointOnRectEdge} from "../rects";
+import {absoluteRect, checkRectEdgesAtPoint, pointOnRectEdge} from "../rects";
 import Drawing from "./Drawing";
 
 export default class RectangleBasedShapeDrawing extends Drawing {
@@ -20,7 +20,7 @@ export default class RectangleBasedShapeDrawing extends Drawing {
 
     constructor(state, rect, lineWidth = 5) {
         super(state);
-        this.rect = rect;
+        this.rect = absoluteRect(rect);
         this.lineWidth = lineWidth;
     }
 
@@ -76,31 +76,37 @@ export default class RectangleBasedShapeDrawing extends Drawing {
     resizeDrawingUponMouseMove(eventX, eventY) {
         const xOffset = eventX - this.lastMouseDown.eventX;
         const yOffset = eventY - this.lastMouseDown.eventY;
+        const startRect = this.lastMouseDown.startRect;
 
         const edgesAtPoint = checkRectEdgesAtPoint(
-            this.lastMouseDown.startRect,
+            startRect,
             this.lastMouseDown.eventX,
             this.lastMouseDown.eventY,
             this.lineWidth * 1.2
         );
 
+        const newRect = Object.assign({}, this.lastMouseDown.startRect);
         if (edgesAtPoint.top) {
-            this.rect.y = this.lastMouseDown.startRect.y + yOffset;
-            this.rect.height = this.lastMouseDown.startRect.height - yOffset;
+            newRect.y = startRect.y + yOffset;
+            newRect.height = startRect.height - yOffset;
             this.needsRender = true;
         }
         if (edgesAtPoint.right) {
-            this.rect.width = this.lastMouseDown.startRect.width + xOffset;
+            newRect.width = startRect.width + xOffset;
             this.needsRender = true;
         }
         if (edgesAtPoint.bottom) {
-            this.rect.height = this.lastMouseDown.startRect.height + yOffset;
+            newRect.height = startRect.height + yOffset;
             this.needsRender = true;
         }
         if (edgesAtPoint.left) {
-            this.rect.x = this.lastMouseDown.startRect.x + xOffset;
-            this.rect.width = this.lastMouseDown.startRect.width - xOffset;
+            newRect.x = startRect.x + xOffset;
+            newRect.width = startRect.width - xOffset;
             this.needsRender = true;
+        }
+
+        if (this.needsRender) {
+            this.rect = absoluteRect(newRect);
         }
     }
 
@@ -116,7 +122,8 @@ export default class RectangleBasedShapeDrawing extends Drawing {
      * @param {Function<{Rect}>} callback
      */
     modifyRect(callback) {
-        callback(this.rect);
+        const newRect = callback(Object.assign({}, this.rect));
+        this.rect = absoluteRect(newRect);
         this.needsRender = true;
     }
 }

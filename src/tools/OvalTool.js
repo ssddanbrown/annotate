@@ -41,8 +41,9 @@ export default class OvalTool extends Tool {
         // Updated rectangle size
         if (this.#activeOval) {
             this.#activeOval.modifyRect(rect => {
-                rect.width = x - this.#lastMouseDownPosition.x;
-                rect.height = y - this.#lastMouseDownPosition.y;
+                const width = x - this.#lastMouseDownPosition.x;
+                const height = y - this.#lastMouseDownPosition.y;
+                return createRect(this.#lastMouseDownPosition.x, this.#lastMouseDownPosition.y, width, height);
             });
         }
 
