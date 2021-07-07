@@ -57,23 +57,40 @@ export function checkRectEdgesAtPoint(rect, x, y, tolerance = 1) {
  * @returns {boolean}
  */
 export function pointOnRectEdge(rect, x, y, tolerance = 1) {
-    const withinOuter = (
-        x > rect.x - tolerance &&
-        x < rect.x + rect.width + tolerance &&
-        y > rect.y - tolerance &&
-        y < rect.y + rect.height + tolerance
-    );
-
-    const withinInner = (
-        x > rect.x + tolerance &&
-        x < rect.x + rect.width - tolerance &&
-        y > rect.y + tolerance &&
-        y < rect.y + rect.height - tolerance
-    );
-
+    const withinOuter = pointWithinRect(expandRect(rect, tolerance), x, y);
+    const withinInner = pointWithinRect(expandRect(rect, -tolerance), x, y);
     return withinOuter && !withinInner;
 }
 
+/**
+ * Check if the given x,y point sits within the given rect.
+ * @param {Rect} rect
+ * @param {Number} x
+ * @param {Number} y
+ * @returns {boolean}
+ */
+export function pointWithinRect(rect, x, y) {
+    return x > rect.x &&
+        x < rect.x + rect.width &&
+        y > rect.y &&
+        y < rect.y + rect.height;
+}
+
+/**
+ * Expand the given rect in both x and y directions by the given amount.
+ * @param {Rect} rect
+ * @param {Number} amount
+ * @returns {Rect}
+ */
+export function expandRect(rect, amount) {
+    const adjust = Math.ceil(amount / 2);
+    return createRect(
+        rect.x - adjust,
+        rect.y - adjust,
+        rect.width + amount,
+        rect.height + amount,
+    );
+}
 
 /**
  * Get the center points of each of the edges of the given rect.

@@ -6,11 +6,13 @@ import RectangleTool from "./tools/RectangleTool";
 import ModifyTool from "./tools/ModifyTool";
 import OvalTool from "./tools/OvalTool";
 import NumberedStepTool from "./tools/NumberedStepTool";
+import PixelateTool from "./tools/PixelateTool";
 
 // Drawings
 import RectangleDrawing from "./drawings/RectangleDrawing";
 import OvalDrawing from "./drawings/OvalDrawing";
 import NumberedStepDrawing from "./drawings/NumberedStepDrawing";
+import PixelateDrawing from "./drawings/PixelateDrawing";
 
 // Canvases & Services
 import DrawingCanvas from "./canvases/DrawingCanvas";
@@ -49,6 +51,7 @@ const modifyTool = new ModifyTool(document.getElementById('tool-modify'), global
 const rectangleTool = new RectangleTool(document.getElementById('tool-rectangle'), globalState);
 const ovalTool = new OvalTool(document.getElementById('tool-oval'), globalState);
 const numberedStepTool = new NumberedStepTool(document.getElementById('tool-numbered-step'), globalState);
+const pixelateTool = new PixelateTool(document.getElementById('tool-pixelate'), globalState);
 globalState.actions.makeToolActive(modifyTool);
 
 // Add some drawings to the canvas for testing
@@ -56,6 +59,7 @@ globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(100,
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(200, 200, 100, 100), 5));
 globalState.actions.addDrawing(new NumberedStepDrawing(globalState, createRect(320, 250, 50, 50), '1'));
 globalState.actions.addDrawing(new OvalDrawing(globalState, createRect(200, 450, 200, 100), 5));
+globalState.actions.addDrawing(new PixelateDrawing(globalState, createRect(400, 150, 200, 100), 10));
 
 // Load sample image for testing
 const sampleImage = document.getElementById('sample_image');
