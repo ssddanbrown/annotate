@@ -5,6 +5,8 @@ import {createRect} from "../rects";
 
 export default class OvalTool extends Tool {
 
+    shortcutKey = 'o';
+
     /**
      * @type {null|{x: Number, y: Number}}
      */

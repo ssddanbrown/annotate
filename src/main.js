@@ -32,11 +32,16 @@ drawingCanvas.startRenderLoop();
 const ioManager = new IoManager(globalState);
 
 // Handle action buttons
-document.getElementById('action-download').addEventListener('click', event => {
-    ioManager.downloadImage();
-});
-document.getElementById('action-copy').addEventListener('click', event => {
-    ioManager.copyToClipboard();
+const actionsByShortcut = {
+    'd': () => ioManager.downloadImage(),
+    'c': () => ioManager.copyToClipboard(),
+};
+document.getElementById('action-download').addEventListener('click', actionsByShortcut.d);
+document.getElementById('action-copy').addEventListener('click', actionsByShortcut.c);
+document.body.addEventListener('keydown', event => {
+    if (typeof actionsByShortcut[event.key] !== 'undefined') {
+        actionsByShortcut[event.key]();
+    }
 });
 
 // Create our available tools and make one active

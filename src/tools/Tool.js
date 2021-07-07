@@ -12,6 +12,12 @@ export default class Tool {
      */
     state;
 
+    /**
+     * Shortcut key to activate this tool.
+     * @type {string}
+     */
+    shortcutKey = '--';
+
     constructor(buttonEl, state) {
         this.#buttonEl = buttonEl;
         this.state = state;
@@ -19,7 +25,19 @@ export default class Tool {
     }
 
     setupDefaultEventHandling() {
+        this.setActiveIfShortcutPressed = this.setActiveIfShortcutPressed.bind(this);
+        window.document.addEventListener('keydown', this.setActiveIfShortcutPressed);
         this.#buttonEl.addEventListener('click', () => this.state.actions.makeToolActive(this));
+    }
+
+    /**
+     * Set this tool as active if the event received matches a press of this tool's shortcut.
+     * @param {KeyboardEvent} event
+     */
+    setActiveIfShortcutPressed(event) {
+        if (event.key === this.shortcutKey) {
+            this.state.actions.makeToolActive(this);
+        }
     }
 
     /**

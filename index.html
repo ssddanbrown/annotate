@@ -16,25 +16,25 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M6.672 1.911a1 1 0 10-1.932.518l.259.966a1 1 0 001.932-.518l-.26-.966zM2.429 4.74a1 1 0 10-.517 1.932l.966.259a1 1 0 00.517-1.932l-.966-.26zm8.814-.569a1 1 0 00-1.415-1.414l-.707.707a1 1 0 101.415 1.415l.707-.708zm-7.071 7.072l.707-.707A1 1 0 003.465 9.12l-.708.707a1 1 0 001.415 1.415zm3.2-5.171a1 1 0 00-1.3 1.3l4 10a1 1 0 001.823.075l1.38-2.759 3.018 3.02a1 1 0 001.414-1.415l-3.019-3.02 2.76-1.379a1 1 0 00-.076-1.822l-10-4z" clip-rule="evenodd" />
                 </svg>
-                Modify
+                <u>M</u>odify
             </button>
             <button id="tool-rectangle">
-                <svg class="h-5 w-5" fill="currentColor" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="m5 3c-1.1046 0-2 0.89543-2 2v10c0 1.1046 0.89543 2 2 2h10c1.1046 0 2-0.89543 2-2v-10c0-1.1046-0.89543-2-2-2z" clip-rule="evenodd" fill-rule="evenodd"/>
                 </svg>
-                Rectangle
+                <u>R</u>ectangle
             </button>
             <button id="tool-oval">
-                <svg class="h-5 w-5" fill="currentColor" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="m10 18c4.4183 0 8-3.5817 8-8 0-4.4183-3.5817-8-8-8s-8 3.5817-8 8c0 4.4183 3.5817 8 8 8z" clip-rule="evenodd" fill-rule="evenodd"/>
                 </svg>
-                Oval
+                <u>O</u>val
             </button>
             <button id="tool-numbered-step">
-                <svg class="h-5 w-5" fill="currentColor" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="m10 2c-4.4183 0-8 3.5817-8 8s3.5817 8 8 8 8-3.5817 8-8-3.5817-8-8-8zm-0.91211 4.2031h1.8613v6.2402h1.7285v1.3535h-5.3105v-1.3535h1.7305v-4.9082l-1.7754 0.36719v-1.334l1.7656-0.36523z"/>
                 </svg>
-                Steps
+                <u>S</u>teps
             </button>
         </div>
         <div class="button-bar">
@@ -42,14 +42,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd" />
                 </svg>
-                Download
+                <u>D</u>ownload
             </button>
             <button id="action-copy">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
                     <path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
                 </svg>
-                Copy
+                <u>C</u>opy
             </button>
         </div>
     </header>
@@ -59,7 +59,7 @@
 
     <div class="drawing-area">
         <canvas id="canvas-image"></canvas>
-        <canvas id="canvas-drawing"></canvas>
+        <canvas id="canvas-drawing" tabindex="-1"></canvas>
     </div>
 
     <script src="./dist/app.js"></script>

@@ -5,6 +5,8 @@ import {createRect} from "../rects";
 
 export default class RectangleTool extends Tool {
 
+    shortcutKey = 'r';
+
     /**
      * @type {null|{x: Number, y: Number}}
      */

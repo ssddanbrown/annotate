@@ -4,6 +4,8 @@ import NumberedStepDrawing from "../drawings/NumberedStepDrawing";
 
 export default class NumberedStepTool extends Tool {
 
+    shortcutKey = 's';
+
     /**
      * @type {null|NumberedStepDrawing}
      */

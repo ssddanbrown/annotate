@@ -3,10 +3,24 @@ import Tool from "./Tool";
 
 export default class ModifyTool extends Tool {
 
+    shortcutKey = 'm';
+
     setupCanvasEventHandling(drawingCanvas) {
         this.passThroughEventToRenderables(drawingCanvas, 'mousedown', 'onMouseDown');
         this.passThroughEventToRenderables(drawingCanvas, 'mouseup', 'onMouseUp');
         this.passThroughEventToRenderables(drawingCanvas, 'mousemove', 'onMouseMove');
+        drawingCanvas.listenToCanvasEvent('keydown', this.onKeyDown.bind(this));
+    }
+
+    /**
+     * On key down press of the canvas.
+     * @param {CanvasEvent} event
+     */
+    onKeyDown(event) {
+        const key = event.originalEvent.key;
+        if (key === 'Delete' && this.state.activeDrawing) {
+            this.state.actions.removeDrawing(this.state.activeDrawing);
+        }
     }
 
     /**
@@ -29,6 +43,13 @@ export default class ModifyTool extends Tool {
             }
         };
         drawingCanvas.listenToCanvasEvent(domEvent, listener);
+    }
+
+    deactivate() {
+        if (this.state.activeDrawing) {
+            this.state.actions.deactivateDrawing(this.state.activeDrawing);
+        }
+        super.deactivate();
     }
 
 }

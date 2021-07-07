@@ -21,6 +21,13 @@ const globalState = {
         addDrawing(drawing) {
             globalState.renderables.push(drawing);
         },
+        removeDrawing(drawing) {
+            if (globalState.activeDrawing === drawing) {
+                globalState.actions.deactivateDrawing(drawing);
+            }
+            const drawingIndex = globalState.renderables.indexOf(drawing);
+            globalState.renderables.splice(drawingIndex, 1);
+        },
         makeToolActive(tool) {
             if (globalState.activeTool) {
                 globalState.activeTool.deactivate();
