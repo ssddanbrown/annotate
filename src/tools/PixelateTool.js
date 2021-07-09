@@ -61,7 +61,7 @@ export default class PixelateTool extends Tool {
                     this.state,
                     createRect(this.#lastMouseDownPosition.x, this.#lastMouseDownPosition.y, width, height)
                 );
-                this.state.actions.addDrawing(this.#activePixelation);
+                this.state.actions.addDrawingToRenderStart(this.#activePixelation);
             }
         }
     }

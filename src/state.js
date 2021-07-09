@@ -21,6 +21,9 @@ const globalState = {
         addDrawing(drawing) {
             globalState.renderables.push(drawing);
         },
+        addDrawingToRenderStart(drawing) {
+            globalState.renderables.splice(0, 0, drawing);
+        },
         removeDrawing(drawing) {
             if (globalState.activeDrawing === drawing) {
                 globalState.actions.deactivateDrawing(drawing);
