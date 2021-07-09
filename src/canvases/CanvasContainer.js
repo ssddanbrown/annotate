@@ -1,4 +1,5 @@
 import {createRect} from "../rects";
+import globalState from "../state";
 
 
 export default class CanvasContainer {
@@ -75,5 +76,29 @@ export default class CanvasContainer {
         this.#rect.x = x;
         this.#rect.y = y;
         this.updateUsingRect();
+    }
+
+    /**
+     * Set the dimensions of the inner canvases.
+     * @param {Number} width
+     * @param {Number} height
+     */
+    setCanvasDimensions(width, height) {
+        this.#state.imageCanvas.setSize(width, height);
+        this.#state.drawingCanvas.setSize(width, height);
+    }
+
+    /**
+     * Scale down the image canvas to the given width.
+     * Will only scale down, not up.
+     * @param {Number} width
+     */
+    scaleDownImageCanvasToWidth(width) {
+        const currentCanvasEl = this.#state.imageCanvas.getCanvasElement();
+        const ratio = currentCanvasEl.height / currentCanvasEl.width;
+        const newWidth = Math.min(currentCanvasEl.width, width);
+        this.#state.imageCanvas.scaleImage(newWidth);
+        this.#state.drawingCanvas.setSize(newWidth, newWidth * ratio);
+        this.centerWithinWindow();
     }
 }

@@ -71,8 +71,7 @@ export default class IoManager {
         const aspectRatio = image.height / image.width;
         const width = Math.min(800, image.width);
         const height = width * aspectRatio;
-        this.#state.imageCanvas.setSize(image.width, image.height);
-        this.#state.drawingCanvas.setSize(image.width, image.height);
+        this.#state.canvasContainer.setCanvasDimensions(image.width, image.height);
         this.#state.canvasContainer.centerToNewDimensions(width, height);
         this.#state.imageCanvas.loadImage(image);
     }

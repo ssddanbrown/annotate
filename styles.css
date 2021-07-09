@@ -72,22 +72,25 @@ h1 {
 }
 
 header {
-    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     max-width: 1000px;
     margin: 1rem auto 2rem;
+}
+
+.button-bar {
+    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.2);
+    background-color: #FFF;
+    opacity: 0.9;
     border-radius: 12px;
     z-index: 10;
     position: relative;
     padding: 1rem;
-    background-color: #FFF;
-    opacity: 0.9;
 }
 
-header:hover {
+.button-bar:hover {
     opacity: 1;
 }
 
@@ -106,6 +109,10 @@ header:hover {
     user-select: none;
 }
 
+.button-bar button:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
 .button-bar button svg {
     width: 18px;
     margin-right: .25rem;
@@ -118,6 +125,19 @@ header:hover {
 
 .button-bar button.active {
     background-color: #bce1c9;
+}
+
+.sidebar {
+    width: 200px;
+    position: fixed;
+    left: 1rem;
+    top: 7rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar button {
+    margin: .5rem 0;
 }
 
 .drawing-area {

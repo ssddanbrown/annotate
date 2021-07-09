@@ -41,9 +41,13 @@ const ioManager = new IoManager(globalState);
 const actionsByShortcut = {
     'd': () => ioManager.downloadImage(),
     'c': () => ioManager.copyToClipboard(),
+    'q': () => {
+        globalState.canvasContainer.scaleDownImageCanvasToWidth(800);
+    },
 };
 document.getElementById('action-download').addEventListener('click', actionsByShortcut.d);
 document.getElementById('action-copy').addEventListener('click', actionsByShortcut.c);
+document.getElementById('action-quick-scale').addEventListener('click', actionsByShortcut.q);
 document.body.addEventListener('keydown', event => {
     if (typeof actionsByShortcut[event.key] !== 'undefined') {
         actionsByShortcut[event.key]();
@@ -60,11 +64,11 @@ const panZoomTool = new PanZoomTool(document.getElementById('tool-pan-zoom'), gl
 globalState.actions.makeToolActive(panZoomTool);
 
 // Add some drawings to the canvas for testing
+globalState.actions.addDrawing(new PixelateDrawing(globalState, createRect(360, 60, 208, 100), 10));
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(100, 100, 100, 100), 5));
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(200, 200, 100, 100), 5));
 globalState.actions.addDrawing(new NumberedStepDrawing(globalState, createRect(320, 250, 50, 50), '1'));
 globalState.actions.addDrawing(new OvalDrawing(globalState, createRect(200, 450, 200, 100), 5));
-globalState.actions.addDrawing(new PixelateDrawing(globalState, createRect(360, 60, 208, 100), 10));
 
 // Load sample image for testing
 const sampleImage = document.getElementById('sample_image');
