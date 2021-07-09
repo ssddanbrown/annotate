@@ -1,12 +1,11 @@
 import Tool from "./Tool";
-import RectangleDrawing from "../drawings/RectangleDrawing";
 import {createRect} from "../rects";
 import PixelateDrawing from "../drawings/PixelateDrawing";
 
 
 export default class PixelateTool extends Tool {
 
-    shortcutKey = 'p';
+    shortcutKey = 'x';
 
     /**
      * @type {null|{x: Number, y: Number}}

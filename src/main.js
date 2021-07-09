@@ -7,6 +7,7 @@ import ModifyTool from "./tools/ModifyTool";
 import OvalTool from "./tools/OvalTool";
 import NumberedStepTool from "./tools/NumberedStepTool";
 import PixelateTool from "./tools/PixelateTool";
+import PanZoomTool from "./tools/PanZoomTool";
 
 // Drawings
 import RectangleDrawing from "./drawings/RectangleDrawing";
@@ -17,6 +18,7 @@ import PixelateDrawing from "./drawings/PixelateDrawing";
 // Canvases & Services
 import DrawingCanvas from "./canvases/DrawingCanvas";
 import ImageCanvas from "./canvases/ImageCanvas";
+import CanvasContainer from "./canvases/CanvasContainer";
 import IoManager from "./IoManager";
 
 // Create our canvases and ready them into globalState
@@ -24,6 +26,8 @@ const imageCanvasEl = document.getElementById('canvas-image');
 const drawingCanvasEl = document.getElementById('canvas-drawing');
 const imageCanvas = new ImageCanvas(imageCanvasEl, globalState);
 const drawingCanvas = new DrawingCanvas(drawingCanvasEl, globalState);
+const canvasContainer = new CanvasContainer(imageCanvasEl.parentElement, globalState);
+globalState.actions.setCanvasContainer(canvasContainer);
 globalState.actions.setDrawingCanvas(drawingCanvas);
 globalState.actions.setImageCanvas(imageCanvas);
 
@@ -52,7 +56,8 @@ const rectangleTool = new RectangleTool(document.getElementById('tool-rectangle'
 const ovalTool = new OvalTool(document.getElementById('tool-oval'), globalState);
 const numberedStepTool = new NumberedStepTool(document.getElementById('tool-numbered-step'), globalState);
 const pixelateTool = new PixelateTool(document.getElementById('tool-pixelate'), globalState);
-globalState.actions.makeToolActive(modifyTool);
+const panZoomTool = new PanZoomTool(document.getElementById('tool-pan-zoom'), globalState);
+globalState.actions.makeToolActive(panZoomTool);
 
 // Add some drawings to the canvas for testing
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(100, 100, 100, 100), 5));

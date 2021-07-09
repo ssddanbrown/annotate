@@ -11,12 +11,16 @@ const globalState = {
     renderables: [],
     drawingCanvas: null,
     imageCanvas: null,
+    canvasContainer: null,
     actions: {
         setImageCanvas(canvas) {
             globalState.imageCanvas = canvas;
         },
         setDrawingCanvas(canvas) {
             globalState.drawingCanvas = canvas;
+        },
+        setCanvasContainer(canvasContainer) {
+            globalState.canvasContainer = canvasContainer;
         },
         addDrawing(drawing) {
             globalState.renderables.push(drawing);
@@ -60,4 +64,5 @@ export default globalState;
  * @property {Array<Drawing>} renderables
  * @property {DrawingCanvas|null} drawingCanvas
  * @property {ImageCanvas|null} imageCanvas
+ * @property {CanvasContainer|null} canvasContainer
  */
