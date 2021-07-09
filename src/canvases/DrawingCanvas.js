@@ -55,9 +55,10 @@ export default class DrawingCanvas extends  Canvas {
      */
     offsetClientPosition(x, y) {
         const drawingBounds = this.el.getBoundingClientRect();
+        const imageRatio =  this.el.width / drawingBounds.width;
         return {
-            x: x - drawingBounds.x,
-            y: y - drawingBounds.y,
+            x: Math.floor((x - drawingBounds.x) * imageRatio),
+            y: Math.floor((y - drawingBounds.y) * imageRatio),
         }
     }
 

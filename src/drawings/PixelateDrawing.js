@@ -20,9 +20,11 @@ export default class PixelateDrawing extends RectangleBasedShapeDrawing {
      */
     render(ctx) {
         // Pixelate from same location of source image
-        const sourceData = this.state.imageCanvas.ctx.getImageData(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
-        this.pixelateImageData(sourceData);
-        ctx.putImageData(sourceData, this.rect.x, this.rect.y);
+        if (this.rect.width > 0) {
+            const sourceData = this.state.imageCanvas.ctx.getImageData(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
+            this.pixelateImageData(sourceData);
+            ctx.putImageData(sourceData, this.rect.x, this.rect.y);
+        }
 
 
         if (this.isActive()) {

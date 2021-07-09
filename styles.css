@@ -114,10 +114,14 @@ header {
     position: relative;
     background: #85bf85;
     margin: 0 auto;
+    max-width: 800px !important;
+    height: auto !important;
+    width: 100% !important;
 }
 .drawing-area canvas {
     position: absolute;
     top: 0;
     left: 0;
     box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
+    max-width: 100% !important;
 }
