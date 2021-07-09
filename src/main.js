@@ -59,7 +59,7 @@ globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(100,
 globalState.actions.addDrawing(new RectangleDrawing(globalState, createRect(200, 200, 100, 100), 5));
 globalState.actions.addDrawing(new NumberedStepDrawing(globalState, createRect(320, 250, 50, 50), '1'));
 globalState.actions.addDrawing(new OvalDrawing(globalState, createRect(200, 450, 200, 100), 5));
-globalState.actions.addDrawing(new PixelateDrawing(globalState, createRect(400, 150, 200, 100), 10));
+globalState.actions.addDrawing(new PixelateDrawing(globalState, createRect(360, 60, 208, 100), 10));
 
 // Load sample image for testing
 const sampleImage = document.getElementById('sample_image');
