@@ -101,4 +101,20 @@ export default class CanvasContainer {
         this.#state.drawingCanvas.setSize(newWidth, newWidth * ratio);
         this.centerWithinWindow();
     }
+
+    /**
+     * Show the canvas container.
+     */
+    show() {
+        document.getElementById('welcome-area').style.display = 'none';
+        this.#el.style.display = null;
+    }
+
+    /**
+     * Hide the canvas container.
+     */
+    hide() {
+        document.getElementById('welcome-area').style.display = null;
+        this.#el.style.display = 'none';
+    }
 }

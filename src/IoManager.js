@@ -74,6 +74,7 @@ export default class IoManager {
         this.#state.canvasContainer.setCanvasDimensions(image.width, image.height);
         this.#state.canvasContainer.centerToNewDimensions(width, height);
         this.#state.imageCanvas.loadImage(image);
+        this.#state.canvasContainer.show();
     }
 
     /**

@@ -50,7 +50,7 @@ export default class NumberedStepDrawing extends RectangleBasedShapeDrawing {
         // Draw text
         const fontSize = this.rect.width * 0.7;
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = fontSize + 'px sans';
+        ctx.font = `bold ${fontSize}px "Rubik", sans`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         ctx.fillText(

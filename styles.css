@@ -46,6 +46,41 @@ table {
 }
 
 /**
+ * FONTS
+ */
+
+/* rubik-regular - latin */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('./fonts/rubik-v14-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('./fonts/rubik-v14-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* rubik-500 - latin */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''),
+    url('./fonts/rubik-v14-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('./fonts/rubik-v14-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* rubik-700 - latin */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''),
+    url('./fonts/rubik-v14-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('./fonts/rubik-v14-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+
+/**
  * APP
  */
 
@@ -55,7 +90,7 @@ table {
 
 body {
     font-size: 16px;
-    font-family: sans-serif;
+    font-family: 'Rubik', sans-serif;
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -90,6 +125,10 @@ header {
     padding: 1rem;
 }
 
+.button-bar.inline {
+    display: inline-block;
+}
+
 .button-bar:hover {
     opacity: 1;
 }
@@ -100,7 +139,8 @@ header {
     border-radius: 12px;
     border: 0;
     margin: 0 .25rem;
-    font-weight: bold;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
     font-size: 0.8rem;
     display: inline-flex;
     align-items: center;
@@ -115,7 +155,7 @@ header {
 
 .button-bar button svg {
     width: 18px;
-    margin-right: .25rem;
+    margin-right: .4rem;
     transition: transform ease-in-out 120ms;
 }
 
@@ -155,4 +195,19 @@ header {
     left: 0;
     box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
     width: 100%;
+}
+
+#welcome-area {
+    max-width: 800px;
+    margin: 15vh auto;
+    text-align: center;
+}
+
+#welcome-area .button-bar {
+    margin-top: 2rem;
+}
+
+h1 {
+    margin-bottom: 1rem;
+    font-weight: 600;
 }

@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Annotate</title>
+
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -60,6 +61,11 @@
             </button>
         </div>
     </header>
+
+    <!-- Hidden input for file uploads -->
+    <input id="file-select" type="file" accept="image/*" style="display: none;">
+
+    <!-- Sample Images-->
     <img id="sample_image" src="./sample_image.jpg" alt="">
 
     <div class="button-bar sidebar">
@@ -75,11 +81,40 @@
             </svg>
             <u>Q</u>uick Scale
         </button>
+        <button id="action-load-image">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
+                <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+            </svg>
+            Load Image
+        </button>
     </div>
 
     <p></p>
 
-    <div class="drawing-area">
+    <div id="welcome-area">
+        <h1>Welcome to Annotate</h1>
+        <p>
+            Paste, or drag & drop, an image into the page to start annotating
+        </p>
+        <div class="button-bar inline">
+            <button id="action-welcome-load-image">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
+                    <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+                </svg>
+                Load Image File
+            </button>
+            <button id="action-welcome-load-sample-image">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                </svg>
+                Load Sample Image
+            </button>
+        </div>
+    </div>
+
+    <div class="drawing-area" style="display: none;">
         <canvas id="canvas-image"></canvas>
         <canvas id="canvas-drawing" tabindex="-1"></canvas>
     </div>

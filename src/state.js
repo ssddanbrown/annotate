@@ -6,6 +6,7 @@
  * @type {GlobalState}
  */
 const globalState = {
+    testing: true,
     activeDrawing: null,
     activeTool: null,
     renderables: [],
@@ -13,6 +14,9 @@ const globalState = {
     imageCanvas: null,
     canvasContainer: null,
     actions: {
+        setTestMode(active = false) {
+            globalState.testing = active;
+        },
         setImageCanvas(canvas) {
             globalState.imageCanvas = canvas;
         },
@@ -58,6 +62,7 @@ export default globalState;
 
 /**
  * @typedef GlobalState
+ * @property {Boolean} testing
  * @property {Drawing|null} activeDrawing
  * @property {Tool|null} activeTool
  * @property {Object} actions
