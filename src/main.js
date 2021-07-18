@@ -1,5 +1,5 @@
 import globalState from "./state";
-globalState.actions.setTestMode(false);
+globalState.actions.setTestMode(true);
 
 // Canvases & Services
 import DrawingCanvas from "./canvases/DrawingCanvas";

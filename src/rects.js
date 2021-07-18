@@ -107,6 +107,20 @@ export function getEdgeMidPoints(rect) {
 }
 
 /**
+ * Get the corner points of the given rect.
+ * @param {Rect} rect
+ * @returns {[{x: *, y}, {x: *, y: *}, {x, y: *}, {x: *, y: *}]}
+ */
+export function getCorners(rect) {
+    return [
+        {x: rect.x,  y: rect.y},
+        {x: rect.x + rect.width, y: rect.y},
+        {x: rect.x + rect.width, y: rect.y + rect.height},
+        {x: rect.x, y: rect.y + rect.height},
+    ];
+}
+
+/**
  * @typedef Rect
  * @property {Number} x
  * @property {Number} y

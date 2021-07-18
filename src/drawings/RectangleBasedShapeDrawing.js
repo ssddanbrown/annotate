@@ -1,4 +1,4 @@
-import {absoluteRect, checkRectEdgesAtPoint, pointOnRectEdge} from "../rects";
+import {absoluteRect, checkRectEdgesAtPoint, getCorners, getEdgeMidPoints, pointOnRectEdge} from "../rects";
 import Drawing from "./Drawing";
 
 export default class RectangleBasedShapeDrawing extends Drawing {
@@ -18,6 +18,11 @@ export default class RectangleBasedShapeDrawing extends Drawing {
      */
     lastMouseDown = null;
 
+    /**
+     * @type {boolean}
+     */
+    lastMouseDownOnHandle = false;
+
     constructor(state, rect, lineWidth = 5) {
         super(state);
         this.rect = absoluteRect(rect);
@@ -32,7 +37,25 @@ export default class RectangleBasedShapeDrawing extends Drawing {
      * @returns {boolean}
      */
     isPointAtDrawing(x, y) {
-        return pointOnRectEdge(this.rect, x, y, this.lineWidth * 1.2);
+        const tolerance = this.lineWidth * (this.isActive() ? 1.6 : 1.2);
+        return pointOnRectEdge(this.rect, x, y, tolerance);
+    }
+
+    /**
+     * Check if the given co-ordinate is located on a resize handle.
+     * @param {Number} x
+     * @param {Number} y
+     * @returns {boolean}
+     */
+    isPointOnHandle(x, y) {
+        for (const handle of this.getHandleLocations()) {
+            const distance = Math.hypot(handle.x - x, handle.y - y);
+            if (distance <= this.lineWidth * 1.2) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -51,6 +74,7 @@ export default class RectangleBasedShapeDrawing extends Drawing {
         }
 
         this.lastMouseDown = {eventX: x, eventY: y, startRect: Object.assign({}, this.rect)};
+        this.lastMouseDownOnHandle = this.isPointOnHandle(x, y);
         this.captureEvents = true;
     }
 
@@ -63,12 +87,14 @@ export default class RectangleBasedShapeDrawing extends Drawing {
     }
 
     onMouseMove(x, y) {
+        const resizeMode = this.lastMouseDownOnHandle && this.isActive();
+
         // Move mode
-        if (this.lastMouseDown && !this.isActive()) {
+        if (this.lastMouseDown && !resizeMode) {
             this.moveDrawingUponMouseMove(x, y);
         }
         // Resize mode
-        if (this.lastMouseDown && this.isActive()) {
+        if (this.lastMouseDown && resizeMode) {
             this.resizeDrawingUponMouseMove(x, y);
         }
     }
@@ -131,5 +157,13 @@ export default class RectangleBasedShapeDrawing extends Drawing {
         const newRect = callback(Object.assign({}, this.rect));
         this.rect = absoluteRect(newRect);
         this.needsRender = true;
+    }
+
+    /**
+     * Get the locations of resize handles.
+     * @returns {{x: Number, y: Number}[]}
+     */
+    getHandleLocations() {
+        return [...getEdgeMidPoints(this.rect), ...getCorners(this.rect)];
     }
 }

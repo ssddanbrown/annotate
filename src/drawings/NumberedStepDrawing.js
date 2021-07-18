@@ -62,7 +62,7 @@ export default class NumberedStepDrawing extends RectangleBasedShapeDrawing {
 
         if (this.isActive()) {
             const handleSize = this.lineWidth * 1.2;
-            for (const {x, y} of getEdgeMidPoints(this.rect)) {
+            for (const {x, y} of this.getHandleLocations()) {
                 this.renderHandle(ctx, x, y, handleSize);
             }
         }
@@ -112,5 +112,12 @@ export default class NumberedStepDrawing extends RectangleBasedShapeDrawing {
 
         this.rect = absoluteRect(newRect);
         this.needsRender = true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    getHandleLocations() {
+        return getEdgeMidPoints(this.rect);
     }
 }

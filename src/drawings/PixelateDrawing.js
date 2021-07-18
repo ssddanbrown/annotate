@@ -1,5 +1,5 @@
 import RectangleBasedShapeDrawing from "./RectangleBasedShapeDrawing";
-import {expandRect, getEdgeMidPoints, pointWithinRect} from "../rects";
+import {expandRect, getCorners, getEdgeMidPoints, pointWithinRect} from "../rects";
 
 export default class PixelateDrawing extends RectangleBasedShapeDrawing {
 
@@ -35,7 +35,7 @@ export default class PixelateDrawing extends RectangleBasedShapeDrawing {
 
             // Active handles
             const handleSize = this.lineWidth * 1.2;
-            for (const {x, y} of getEdgeMidPoints(this.rect)) {
+            for (const {x, y} of this.getHandleLocations()) {
                 this.renderHandle(ctx, x, y, handleSize);
             }
         }
@@ -80,6 +80,7 @@ export default class PixelateDrawing extends RectangleBasedShapeDrawing {
      * @inheritDoc
      */
     isPointAtDrawing(x, y) {
-        return pointWithinRect(expandRect(this.rect, this.lineWidth), x, y);
+        const tolerance = this.lineWidth * (this.isActive() ? 1.6 : 1.2);
+        return pointWithinRect(expandRect(this.rect, this.lineWidth * tolerance), x, y);
     }
 }

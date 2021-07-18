@@ -1,5 +1,5 @@
 import RectangleBasedShapeDrawing from "./RectangleBasedShapeDrawing";
-import {getEdgeMidPoints} from "../rects";
+import {getCorners, getEdgeMidPoints} from "../rects";
 
 export default class RectangleDrawing extends RectangleBasedShapeDrawing {
 
@@ -26,7 +26,7 @@ export default class RectangleDrawing extends RectangleBasedShapeDrawing {
 
         if (this.isActive()) {
             const handleSize = this.lineWidth * 1.2;
-            for (const {x, y} of getEdgeMidPoints(this.rect)) {
+            for (const {x, y} of this.getHandleLocations()) {
                 this.renderHandle(ctx, x, y, handleSize);
             }
         }

@@ -37,7 +37,7 @@ export default class OvalDrawing extends RectangleBasedShapeDrawing {
 
         if (this.isActive()) {
             const handleSize = this.lineWidth * 1.2;
-            for (const {x, y} of getEdgeMidPoints(this.rect)) {
+            for (const {x, y} of this.getHandleLocations()) {
                 this.renderHandle(ctx, x, y, handleSize);
             }
         }
@@ -69,5 +69,12 @@ export default class OvalDrawing extends RectangleBasedShapeDrawing {
         }
 
         return pointWithinOval(this.lineWidth) && !pointWithinOval(-this.lineWidth);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    getHandleLocations() {
+        return getEdgeMidPoints(this.rect);
     }
 }
