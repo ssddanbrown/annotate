@@ -160,6 +160,44 @@ export default class RectangleBasedShapeDrawing extends Drawing {
     }
 
     /**
+     * Action to run upon scaling of the underlying drawing canvas.
+     * @param {Number} xFactor x-axis size change relative to current size
+     * @param {Number} yFactor y-axis size change relative to current size
+     */
+    onCanvasScale(xFactor, yFactor) {
+        this.modifyPosition(xFactor, yFactor);
+        this.modifySize(xFactor, yFactor);
+    }
+
+    /**
+     * Modify the position of the drawing to the given x and y factors
+     * relative to the current position of the drawing.
+     * @param {Number} xFactor x-axis position change relative to current position
+     * @param {Number} yFactor y-axis position change relative to current position
+     */
+    modifyPosition(xFactor, yFactor) {
+        this.modifyRect((rect) => {
+            rect.x = Math.floor(rect.x * xFactor);
+            rect.y = Math.floor(rect.y * yFactor);
+            return rect;
+        });
+    }
+
+    /**
+     * Modify the size of the drawing to the given x and y factors
+     * relative to the current size of the drawing.
+     * @param {Number} xFactor x-axis size change relative to current size
+     * @param {Number} yFactor y-axis size change relative to current size
+     */
+    modifySize(xFactor, yFactor) {
+        this.modifyRect((rect) => {
+            rect.width = Math.floor(rect.width * xFactor);
+            rect.height = Math.floor(rect.height * yFactor);
+            return rect;
+        });
+    }
+
+    /**
      * Get the locations of resize handles.
      * @returns {{x: Number, y: Number}[]}
      */

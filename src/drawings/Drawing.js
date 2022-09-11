@@ -75,6 +75,14 @@ export default class Drawing {
         return this === this.state.activeDrawing;
     }
 
+    /**
+     * Action to run upon scaling of the underlying drawing canvas.
+     * @param {Number} xFactor x-axis size change relative to current size
+     * @param {Number} yFactor y-axis size change relative to current size
+     */
+    onCanvasScale(xFactor, yFactor) {
+        //
+    }
 
     /**
      * Action to run upon mouse down of the canvas.

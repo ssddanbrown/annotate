@@ -93,4 +93,20 @@ export default class DrawingCanvas extends  Canvas {
             requestAnimationFrame(this.renderFrame.bind(this));
         }
     }
+
+    /**
+     * Set the size of this canvas.
+     * @param {Number} width
+     * @param {Number} height
+     */
+    setSize(width, height) {
+        const xFactor = width / this.el.width;
+        const yFactor = height / this.el.height;
+
+        for (const renderable of this.state.renderables) {
+            renderable.onCanvasScale(xFactor, yFactor);
+        }
+
+        super.setSize(width, height);
+    }
 }
