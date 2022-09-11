@@ -73,10 +73,17 @@ export default class NumberedStepTool extends Tool {
      * @param {Number} cy
      */
     addNewDrawingAtCenter(cx, cy) {
-        const rect = this.getRectBetweenCenterAndRadialPoints(cx, cy, cx + this.#defaultRadius, cy + this.#defaultRadius);
+        const radius = this.#getDrawingRelativeRadius();
+        const rect = this.getRectBetweenCenterAndRadialPoints(cx, cy, cx + radius, cy + radius);
         this.#activeStep = new NumberedStepDrawing(this.state, rect, String(this.#stepCount));
         this.#stepCount++;
         this.state.actions.addDrawing(this.#activeStep);
+    }
+
+    #getDrawingRelativeRadius() {
+        const canvasWidth = this.state.drawingCanvas.getSize().width;
+        const factor = (canvasWidth / 800);
+        return Math.floor(factor * this.#defaultRadius);
     }
 
     /**

@@ -47,5 +47,13 @@ export default class Canvas {
         this.el.width = width;
         this.el.height = height;
     }
+
+    /**
+     * Get the size of this canvas.
+     * @returns {{width: number, height: number}}
+     */
+    getSize() {
+        return {width: this.el.width, height: this.el.height};
+    }
 }
 

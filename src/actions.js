@@ -44,7 +44,9 @@ export function setupActions(globalState) {
     // Load sample image for testing
     if (globalState.testing) {
         loadSampleImageForTesting(ioManager);
-        drawTestDrawings(globalState);
+        setTimeout(() => {
+            drawTestDrawings(globalState);
+        }, 100);
     }
 }
 
